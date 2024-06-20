@@ -542,6 +542,7 @@ pub async fn get_server_module_options_context(
                 enable_typescript_transform: Some(TypescriptTransformOptions::default().cell()),
                 enable_jsx: Some(JsxTransformOptions::default().cell()),
                 custom_rules: foreign_next_server_rules,
+                tree_shaking_mode: None,
                 ..module_options_context.clone()
             };
 
@@ -595,6 +596,7 @@ pub async fn get_server_module_options_context(
             let internal_module_options_context = ModuleOptionsContext {
                 enable_typescript_transform: Some(TypescriptTransformOptions::default().cell()),
                 custom_rules: foreign_next_server_rules,
+                tree_shaking_mode: None,
                 ..module_options_context.clone()
             };
 
@@ -663,6 +665,7 @@ pub async fn get_server_module_options_context(
             let internal_module_options_context = ModuleOptionsContext {
                 enable_typescript_transform: Some(TypescriptTransformOptions::default().cell()),
                 custom_rules: foreign_next_server_rules,
+                tree_shaking_mode: None,
                 ..module_options_context.clone()
             };
             ModuleOptionsContext {
@@ -727,6 +730,7 @@ pub async fn get_server_module_options_context(
             let internal_module_options_context = ModuleOptionsContext {
                 enable_typescript_transform: Some(TypescriptTransformOptions::default().cell()),
                 custom_rules: internal_custom_rules,
+                tree_shaking_mode: None,
                 ..module_options_context.clone()
             };
             ModuleOptionsContext {
@@ -807,6 +811,7 @@ pub async fn get_server_module_options_context(
             let internal_module_options_context = ModuleOptionsContext {
                 enable_typescript_transform: Some(TypescriptTransformOptions::default().cell()),
                 custom_rules: internal_custom_rules,
+                tree_shaking_mode: None,
                 ..module_options_context.clone()
             };
             ModuleOptionsContext {
