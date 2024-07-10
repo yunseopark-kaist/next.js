@@ -284,6 +284,7 @@ export interface ExperimentalConfig {
 
   /**
    * A list of extensions to resolve when importing files.
+   * The default value is `['.js', '.mjs', '.tsx', '.ts', '.jsx', '.json', '.node']`.
    *
    * @see [Resolve Extensions](https://nextjs.org/docs/app/api-reference/next-config-js/turbo#resolve-extensions)
    */

@@ -696,7 +696,7 @@ export default async function getBaseWebpackConfig(
     // Disable .mjs for node_modules bundling
     extensions: config.experimental?.resolveExtensions
       ? config.experimental.resolveExtensions
-      : ['.js', '.mjs', '.tsx', '.ts', '.jsx', '.json', '.wasm'],
+      : ['.js', '.mjs', '.tsx', '.ts', '.jsx', '.json', '.node'],
     extensionAlias: config.experimental.extensionAlias,
     modules: [
       'node_modules',
