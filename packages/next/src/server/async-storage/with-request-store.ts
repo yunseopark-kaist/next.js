@@ -7,7 +7,7 @@ import type { WithStore } from './with-store'
 import type { NextRequest } from '../web/spec-extension/request'
 import type { __ApiPreviewProps } from '../api-utils'
 
-import { FLIGHT_PARAMETERS } from '../../client/components/app-router-headers'
+import { FLIGHT_HEADERS } from '../../client/components/app-router-headers'
 import {
   HeadersAdapter,
   type ReadonlyHeaders,
@@ -22,11 +22,12 @@ import { DraftModeProvider } from './draft-mode-provider'
 import { splitCookiesString } from '../web/utils'
 import { AfterContext } from '../after/after-context'
 import type { RequestLifecycleOpts } from '../base-server'
+import type { ServerComponentsHmrCache } from '../response-cache'
 
 function getHeaders(headers: Headers | IncomingHttpHeaders): ReadonlyHeaders {
   const cleaned = HeadersAdapter.from(headers)
-  for (const param of FLIGHT_PARAMETERS) {
-    cleaned.delete(param.toString().toLowerCase())
+  for (const header of FLIGHT_HEADERS) {
+    cleaned.delete(header.toLowerCase())
   }
 
   return HeadersAdapter.seal(cleaned)
@@ -75,13 +76,22 @@ export type RequestContext = {
   }
   res?: ServerResponse | BaseNextResponse
   renderOpts?: WrapperRenderOpts
+  isHmrRefresh?: boolean
+  serverComponentsHmrCache?: ServerComponentsHmrCache
 }
 
 export const withRequestStore: WithStore<RequestStore, RequestContext> = <
   Result,
 >(
   storage: AsyncLocalStorage<RequestStore>,
-  { req, url, res, renderOpts }: RequestContext,
+  {
+    req,
+    url,
+    res,
+    renderOpts,
+    isHmrRefresh,
+    serverComponentsHmrCache,
+  }: RequestContext,
   callback: (store: RequestStore) => Result
 ): Result => {
   function defaultOnUpdateCookies(cookies: string[]) {
@@ -171,6 +181,10 @@ export const withRequestStore: WithStore<RequestStore, RequestContext> = <
     reactLoadableManifest: renderOpts?.reactLoadableManifest || {},
     assetPrefix: renderOpts?.assetPrefix || '',
     afterContext: createAfterContext(renderOpts),
+    isHmrRefresh,
+    serverComponentsHmrCache:
+      serverComponentsHmrCache ||
+      (globalThis as any).__serverComponentsHmrCache,
   }
 
   if (store.afterContext) {
